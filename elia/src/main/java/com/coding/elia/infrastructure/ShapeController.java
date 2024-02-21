@@ -35,4 +35,10 @@ public class ShapeController {
     public ShapeDto getShape(@PathVariable("shapeId") String shapeId) {
         return shapeService.getShape(shapeId);
     }
+
+
+    @GetMapping
+    public ShapeDto getShape() {
+        return shapeService.getShapeByUserEmail();
+    }
 }

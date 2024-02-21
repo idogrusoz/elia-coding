@@ -9,4 +9,5 @@ import java.util.UUID;
 public interface ShapeRepository extends JpaRepository<Shape, Long> {
 
     Optional<Shape> findByUuid(UUID uuid);
+    Optional<Shape> findByUserEmail(String email);
 }

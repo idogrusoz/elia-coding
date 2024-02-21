@@ -35,6 +35,11 @@ public class Shape {
 
     @Getter
     @Setter
+    @Column(unique = true)
+    private String userEmail;
+
+    @Getter
+    @Setter
     @OneToMany(mappedBy = "shape", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Coordinate> coordinates;
 
