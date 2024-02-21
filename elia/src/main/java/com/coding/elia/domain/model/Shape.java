@@ -37,4 +37,8 @@ public class Shape {
     @OneToOne(mappedBy = "shape", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "coordinate_id")
     private Coordinate coordinate;
+
+    public void moveTo(Coordinate coordinate) {
+        setCoordinate(coordinate);
+    }
 }

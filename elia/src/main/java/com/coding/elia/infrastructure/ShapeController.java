@@ -3,7 +3,9 @@ package com.coding.elia.infrastructure;
 import com.coding.elia.application.shape.ShapeService;
 import com.coding.elia.application.dto.CoordinateDto;
 import com.coding.elia.application.dto.ShapeDto;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,5 +25,9 @@ public class ShapeController {
         return shapeService.createShape(coordinate);
     }
 
+    @PutMapping("/{shapeId}/move")
+    public ShapeDto moveShape(@RequestBody CoordinateDto coordinate, @PathVariable("shapeId") String shapeId) {
+        return shapeService.moveShape(coordinate, shapeId);
+    }
 
 }
