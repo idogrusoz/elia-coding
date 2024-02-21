@@ -1,5 +1,5 @@
-import Svg from "./components/Svg";
+import Game from './pages/Game';
 
 export default function App() {
-  return <Svg/>
+  return <Game />;
 }
