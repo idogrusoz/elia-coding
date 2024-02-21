@@ -3,8 +3,9 @@ import Canvas from '../components/Canvas';
 import Coordinate from '../types/coordinate';
 import Shape from '../types/shape';
 import axios, { AxiosResponse } from 'axios';
+import { GameProps } from '../types/prop-types';
 
-export default function Game() {
+export default function Game({ email }: GameProps) {
   const size = 50;
   const [coordinates, setCooordinates] = useState<Coordinate>({
     x: size,
@@ -34,6 +35,7 @@ export default function Game() {
         url,
         method,
         data: data ?? coordinates,
+        headers: { email },
       });
       return response.data;
     } catch (error) {
@@ -44,9 +46,9 @@ export default function Game() {
   useEffect(() => {
     async function getOrInitShape() {
       let data: Shape | undefined;
-      if (shapeId !== null) {
+      if (email) {
         console.log(shapeId);
-        data = await executeApiCall('get', `/${shapeId}`);
+        data = await executeApiCall('get', ``);
         setShapeData(data);
       }
       if (!data) {

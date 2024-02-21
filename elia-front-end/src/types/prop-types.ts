@@ -11,3 +11,12 @@ export type CanvasProps = {
   size: number;
   updateCoordinates: (c:Coordinate) => void;
 };
+
+export type RegistrationProps = {
+  getUserInput: (input: string) => void;
+};
+
+export type GameProps = {
+  email: string;
+};
+
