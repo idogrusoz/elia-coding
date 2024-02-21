@@ -4,6 +4,7 @@ import com.coding.elia.application.coordinate.CoordinateRepository;
 import com.coding.elia.application.dto.CoordinateDto;
 import com.coding.elia.application.dto.ShapeDto;
 import com.coding.elia.application.exceptions.ApplicationFailureException;
+import com.coding.elia.application.exceptions.UnmappableIdException;
 import com.coding.elia.application.exceptions.NotFoundException;
 import com.coding.elia.domain.model.Shape;
 import jakarta.persistence.EntityNotFoundException;
@@ -21,6 +22,9 @@ public class ShapeService {
     private final ShapeRepository shapeRepository;
     private final CoordinateRepository coordinateRepository;
 
+    private static final String SHAPE_NOT_FOUND = "Shape with id %s is not found";
+    private static final String WRONG_SHAPE_ID = "Received a wrong type of shape id";
+
     public ShapeService(ShapeRepository shapeRepository, CoordinateRepository coordinateRepository) {
         this.shapeRepository = shapeRepository;
         this.coordinateRepository = coordinateRepository;
@@ -37,7 +41,7 @@ public class ShapeService {
             coordinateRepository.save(coordinate);
             shapeRepository.saveAndFlush(shape);
             return ShapeDto.from(shape);
-        } catch (IllegalArgumentException | OptimisticLockingFailureException exception) {
+        } catch (UnmappableIdException | OptimisticLockingFailureException exception) {
             log.errorf("Error while creating a new shape", exception);
             throw new ApplicationFailureException("Error while creating a new shape. Please try again");
         }
@@ -54,11 +58,26 @@ public class ShapeService {
             shapeRepository.saveAndFlush(shape);
             return ShapeDto.from(shape);
         } catch (EntityNotFoundException e){
-            log.errorf("Shape with id %s is not found", shapeId);
-            throw new NotFoundException(String.format("Shape with id %s is not found", shapeId));
-        } catch ( OptimisticLockingFailureException exception) {
-            log.errorf("Error while creating a new shape", exception);
+            log.errorf(SHAPE_NOT_FOUND, shapeId);
+            throw new NotFoundException(String.format(SHAPE_NOT_FOUND, shapeId));
+        } catch ( OptimisticLockingFailureException e) {
+            log.errorf("Error while creating a new shape", e);
             throw new ApplicationFailureException("Error while creating a new shape. Please try again");
+        } catch (IllegalArgumentException e) {
+            log.errorf(WRONG_SHAPE_ID, e);
+            throw new UnmappableIdException(WRONG_SHAPE_ID);
+        }
+    }
+
+    public ShapeDto getShape(String shapeId) {
+        try {
+            return shapeRepository.findByUuid(UUID.fromString(shapeId)).map(ShapeDto::from).orElseThrow(EntityNotFoundException::new);
+        } catch (EntityNotFoundException e) {
+            log.errorf(SHAPE_NOT_FOUND, shapeId);
+            throw new NotFoundException(String.format(SHAPE_NOT_FOUND, shapeId));
+        } catch (IllegalArgumentException e) {
+            log.errorf(WRONG_SHAPE_ID, e);
+            throw new UnmappableIdException(WRONG_SHAPE_ID);
         }
     }
 }

@@ -3,6 +3,7 @@ package com.coding.elia.infrastructure;
 import com.coding.elia.application.shape.ShapeService;
 import com.coding.elia.application.dto.CoordinateDto;
 import com.coding.elia.application.dto.ShapeDto;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -30,4 +31,8 @@ public class ShapeController {
         return shapeService.moveShape(coordinate, shapeId);
     }
 
+    @GetMapping("/{shapeId}")
+    public ShapeDto getShape(@PathVariable("shapeId") String shapeId) {
+        return shapeService.getShape(shapeId);
+    }
 }
