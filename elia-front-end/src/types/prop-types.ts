@@ -9,4 +9,5 @@ export type SvgProps = {
 export type CanvasProps = {
   coordinates: Coordinate;
   size: number;
+  updateCoordinates: (c:Coordinate) => void;
 };

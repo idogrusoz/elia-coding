@@ -1,14 +1,9 @@
-import { RefObject, useRef, useState } from 'react';
+import { RefObject, useRef } from 'react';
 import Svg from './Svg';
-import Coordinate from '../types/coordinate';
+import { CanvasProps } from '../types/prop-types';
 
-export default function Canvas() {
-  const size = 50;
+export default function Canvas({ coordinates, size, updateCoordinates }: CanvasProps) {
   const canvas = useRef<HTMLDivElement>(null);
-  const [coordinates, setCooordinates] = useState<Coordinate>({
-    x: size,
-    y: size,
-  });
 
   async function onDragEnd(e: DragEvent) {
     if (canvas.current == null) {
@@ -17,7 +12,7 @@ export default function Canvas() {
     if (isDroppedInTheCanvas(canvas, e)) {
       const wrapperTop = canvas.current?.offsetTop ?? 0;
       const wrapperLeft = canvas.current?.offsetLeft ?? 0;
-      setCooordinates({
+      updateCoordinates({
         x: e.pageX - wrapperLeft,
         y: e.pageY - wrapperTop,
       });
