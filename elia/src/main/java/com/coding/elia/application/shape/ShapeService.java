@@ -13,6 +13,7 @@ import lombok.extern.jbosslog.JBossLog;
 import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -35,7 +36,7 @@ public class ShapeService {
         try {
             var coordinate = coordinateDto.to();
             var shape = new Shape();
-            shape.setCoordinate(coordinate);
+            shape.setCoordinates(List.of(coordinate));
             shape.setUuid(UUID.randomUUID());
             coordinate.setShape(shape);
             coordinateRepository.save(coordinate);
