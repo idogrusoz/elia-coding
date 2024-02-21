@@ -47,7 +47,6 @@ export default function Game({ email }: GameProps) {
     async function getOrInitShape() {
       let data: Shape | undefined;
       if (email) {
-        console.log(shapeId);
         data = await executeApiCall('get', ``);
         setShapeData(data);
       }
