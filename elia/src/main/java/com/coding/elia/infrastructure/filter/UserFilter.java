@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 
 @Component
-@Order(2)
+@Order(1)
 public class UserFilter implements Filter {
 
     @Override
@@ -22,7 +22,6 @@ public class UserFilter implements Filter {
 
         HttpServletRequest req = (HttpServletRequest) request;
         String userEmail = req.getHeader("email");
-
         UserEmailContext.setUserContext(userEmail);
 
         try {
