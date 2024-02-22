@@ -51,6 +51,7 @@ export default function Game({ email }: GameProps) {
 
   function resetSvgToDefault() {
     setSvgFile(svg)
+    setShowSettings(false)
   }
 
   async function executeApiCall(
