@@ -2,7 +2,7 @@ import { RefObject, useRef } from 'react';
 import Svg from './Svg';
 import { CanvasProps } from '../types/prop-types';
 
-export default function Canvas({ coordinates, size, updateCoordinates }: CanvasProps) {
+export default function Canvas({ coordinates, size, svg, updateCoordinates }: CanvasProps) {
   const canvas = useRef<HTMLDivElement>(null);
 
   async function onDragEnd(e: DragEvent) {
@@ -44,6 +44,7 @@ export default function Canvas({ coordinates, size, updateCoordinates }: CanvasP
       <Svg
         onDragEnd={onDragEnd}
         size={size}
+        svg={svg}
         coordinates={coordinates}
       />
     </div>
